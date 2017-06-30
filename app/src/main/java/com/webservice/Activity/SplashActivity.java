@@ -1,14 +1,17 @@
-package com.webservice;
+package com.webservice.Activity;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+/**
+ * Created by Pooya on 6/30/2017.
+ */
+
+public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        
     }
 }
