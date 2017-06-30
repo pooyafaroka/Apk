@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Web Service</string>
+    <string name="Log_In">Log in</string>
+    <string name="Register">Successfully Registered</string>
+    <string name="sample">Sample Text for test</string>
+    <string name="dissmiss">Dissmiss</string>
+    <string name="fill_blank">Please fill blank field</string>
+    <string name="title_fill_blank">Fill Blank</string>
+    <string name="Success">Successfull</string>
+    <string name="Loading">Loading</string>
 </resources>

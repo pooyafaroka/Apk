@@ -1,0 +1,167 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:shimmer="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blur_background"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <com.webservice.Components.Shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_actionbar_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            shimmer:duration="1000">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:text="Login"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/md_white_1000"/>
+
+        </com.webservice.Components.Shimmer.ShimmerFrameLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_white_1000"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/round_shape_tr"
+            android:orientation="vertical">
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_name"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfFamily"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_name"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Family"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.ProcessButton.iml.ActionProcessButton
+                android:id="@+id/btnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/Log_In"
+                android:textColor="@color/md_white_1000"
+                android:textSize="18sp"
+                custom:pb_colorComplete="@color/md_green_900"
+                custom:pb_colorNormal="@color/md_orange_500"
+                custom:pb_colorPressed="@color/md_orange_200"
+                custom:pb_colorProgress="@color/colorPrimary"
+                custom:pb_textComplete="@string/Success"
+                custom:pb_textProgress="@string/Loading" />
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>
