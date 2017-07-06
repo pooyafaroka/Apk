@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,8 +11,22 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.webservice.Activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <com.webservice.Components.ProcessButton.iml.ActionProcessButton
+        android:id="@+id/btnReceive_User_Tracker"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/receive_user_tracker"
+        android:textColor="@color/md_white_1000"
+        android:textSize="18sp"
+        custom:pb_colorComplete="@color/md_green_900"
+        custom:pb_colorNormal="@color/md_orange_500"
+        custom:pb_colorPressed="@color/md_orange_200"
+        custom:pb_colorProgress="@color/colorPrimary"
+        custom:pb_textComplete="@string/Success"
+        custom:pb_textProgress="@string/Loading" />
+
 </RelativeLayout>

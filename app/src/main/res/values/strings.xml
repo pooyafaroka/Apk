@@ -16,4 +16,5 @@
     <string name="register_before">You register before! Please login.</string>
     <string name="wrong_username_password">Wrong username or password</string>
     <string name="Successfully_Login">Successfully Login</string>
+    <string name="receive_user_tracker">Receive User Tracker</string>
 </resources>

@@ -23,45 +23,22 @@ public class SplashActivity extends Activity {
 
         Context mContext = SplashActivity.this;
         final Users users = new Users(mContext);
-        final String[] userInfo = users.ReadUserLocal();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(userInfo[Users.UserEnum.Name.ordinal()] != null)
-                {
-                    if(userInfo[Users.UserEnum.Name.ordinal()].equals("NaN"))
-                    {
-                        if(users.getRegisterBefore())
-                        {
-                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                            finish();
-                        }
-                        else
-                        {
-                            startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
-                            finish();
-                        }
-                    }
-                    else
-                    {
+                if(users.getRegisterBefore()) {
+                    if (users.getLogin()) {
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         finish();
-                    }
-                }
-                else
-                {
-                    if(users.getRegisterBefore())
-                    {
+                    } else {
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                         finish();
                     }
-                    else
-                    {
-                        startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
-                        finish();
-                    }
+                } else {
+                    startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+                    finish();
                 }
 
             }

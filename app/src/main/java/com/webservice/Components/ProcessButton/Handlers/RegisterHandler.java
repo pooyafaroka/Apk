@@ -1,4 +1,4 @@
-package com.webservice.Components.ProcessButton;
+package com.webservice.Components.ProcessButton.Handlers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.webservice.Activity.LoginActivity;
+import com.webservice.Components.ProcessButton.ProcessButton;
 import com.webservice.Dialogs.CustomDialog;
 import com.webservice.R;
 import com.webservice.Util.Const;
@@ -20,24 +21,22 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-/**
- * Created by Pooya on 7/6/2017.
- */
-public class LoginHandler {
+public class RegisterHandler {
 
     private Context mContext;
     private Users users;
     private Handler handler;
     private ProcessButton button;
 
-    public interface OnCompleteLoginListener {
+    public interface OnCompleteRegisterListener {
+
         public void onComplete();
     }
 
-    private OnCompleteLoginListener mListener;
+    private OnCompleteRegisterListener mListener;
     private int mProgress;
 
-    public LoginHandler(OnCompleteLoginListener listener) {
+    public RegisterHandler(OnCompleteRegisterListener listener) {
         mListener = listener;
     }
 
@@ -46,7 +45,7 @@ public class LoginHandler {
         users = new Users(mContext);
         this.button = button;
         button.setEnabled(true);
-        Login(strInput);
+        Register(strInput);
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -55,7 +54,7 @@ public class LoginHandler {
                 button.setProgress(mProgress);
                 handler.postDelayed(this, generateDelay());
                 if(mProgress >= 100)
-                    mProgress = 0;
+                    mProgress = 1;
             }
         }, generateDelay());
     }
@@ -72,15 +71,19 @@ public class LoginHandler {
         return 750;
     }
 
-    public void Login(String[] strInput) {
+    public void Register(String[] strInput) {
 
-        new LoginTask().execute(strInput);
+        new RegisterTask().execute(strInput);
     }
 
-    class LoginTask extends AsyncTask<String, Void, String> {
+    class RegisterTask extends AsyncTask<String, Void, String> {
+        String Name = "";
+        String Family = "";
         String Mobile = "";
+        String Email = "";
         String Password = "";
         private String res = "";
+        private int HTTP_STATUS_CODE = 204;
 
         @Override
         protected void onPreExecute() {
@@ -89,17 +92,25 @@ public class LoginHandler {
 
         @Override
         protected String doInBackground(String... strInput) {
-            Mobile = strInput[0];
-            Password = strInput[1];
+            Name = strInput[Users.UserEnum.Name.ordinal()];
+            Family = strInput[Users.UserEnum.Family.ordinal()];
+            Mobile = strInput[Users.UserEnum.Mobile.ordinal()];
+            Email = strInput[Users.UserEnum.Email.ordinal()];
+            Password = strInput[Users.UserEnum.Password_1.ordinal()];
+            String IMEI = users.getIMEI();
 
             HttpClient hc = new DefaultHttpClient();
             String message;
 
-            HttpPost p = new HttpPost(Const.Login);
+            HttpPost p = new HttpPost(Const.Register);
             JSONObject object = new JSONObject();
             try {
+                object.put("Name", Name);
+                object.put("Family", Family);
                 object.put("Mobile", Mobile);
+                object.put("Email", Email);
                 object.put("Password", Password);
+                object.put("IMEI", IMEI);
             } catch (Exception ex) {
 
             }
@@ -134,14 +145,15 @@ public class LoginHandler {
         protected void onPostExecute(String res) {
             if(res.equals("OK"))
             {
+                stop();
+                users.setRegisterBefore();
                 mListener.onComplete();
             }
-            else if(res.equals("NOT"))
+            else if(res.equals("EXIST"))
             {
-                CustomDialog customDialog = new CustomDialog(mContext, mContext.getResources().getString(R.string.wrong_username_password));
-                customDialog.SetTitle(mContext.getResources().getString(R.string.faild_title));
-                customDialog.SetButtonText(mContext.getResources().getString(R.string.dissmiss));
-                customDialog.show();
+                stop();
+                users.setRegisterBefore();
+                mContext.startActivity(new Intent(mContext, LoginActivity.class));
             }
             else if(res.equals("NaN"))
             {
@@ -149,9 +161,9 @@ public class LoginHandler {
                 customDialog.SetTitle(mContext.getResources().getString(R.string.faild_title));
                 customDialog.SetButtonText(mContext.getResources().getString(R.string.dissmiss));
                 customDialog.show();
+                stop();
             }
-            stop();
-            button.setText(R.string.Log_In);
+            button.setText(R.string.Register);
             button.setProgress(0);
         }
     }

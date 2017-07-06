@@ -12,8 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.webservice.Components.Materialtextfield.MaterialTextField;
-import com.webservice.Components.ProcessButton.LoginHandler;
-import com.webservice.Components.ProcessButton.RegisterHandler;
+import com.webservice.Components.ProcessButton.Handlers.LoginHandler;
 import com.webservice.Components.ProcessButton.iml.ActionProcessButton;
 import com.webservice.Components.Shimmer.ShimmerFrameLayout;
 import com.webservice.Dialogs.CustomDialog;

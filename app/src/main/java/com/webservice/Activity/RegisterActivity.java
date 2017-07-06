@@ -1,9 +1,12 @@
 package com.webservice.Activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.webservice.Components.Materialtextfield.MaterialTextField;
-import com.webservice.Components.ProcessButton.RegisterHandler;
+import com.webservice.Components.ProcessButton.Handlers.RegisterHandler;
 import com.webservice.Components.ProcessButton.iml.ActionProcessButton;
 import com.webservice.Components.Shimmer.ShimmerFrameLayout;
 import com.webservice.Dialogs.CustomDialog;
@@ -24,7 +27,11 @@ import com.webservice.Util.Validation;
  */
 public class RegisterActivity extends Activity implements RegisterHandler.OnCompleteRegisterListener {
 
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 101;
     private Context mContext;
+    private RegisterHandler progressGenerator;
+    private ActionProcessButton btnSignIn;
+    private String[] strInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +67,8 @@ public class RegisterActivity extends Activity implements RegisterHandler.OnComp
         mtfPassword_1.getEditText().addTextChangedListener(new myTextWatcher(mtfPassword_1));
         mtfPassword_2.getEditText().addTextChangedListener(new myTextWatcher(mtfPassword_2));
 
-        final RegisterHandler progressGenerator = new RegisterHandler(this);
-        final ActionProcessButton btnSignIn = (ActionProcessButton) findViewById(R.id.btnSignIn);
+        progressGenerator = new RegisterHandler(this);
+        btnSignIn = (ActionProcessButton) findViewById(R.id.btnSignIn);
 
         btnSignIn.setMode(ActionProcessButton.Mode.ENDLESS);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +85,7 @@ public class RegisterActivity extends Activity implements RegisterHandler.OnComp
                 String strEmail = mtfEmail.getEditText().getText().toString();
                 String strPassword_1 = mtfPassword_1.getEditText().getText().toString();
                 String strPassword_2 = mtfPassword_2.getEditText().getText().toString();
-                String[] strInput = new String[]{strName, strFamily, strMobile, strEmail, strPassword_1, strPassword_2};
+                strInput = new String[]{strName, strFamily, strMobile, strEmail, strPassword_1, strPassword_2};
                 if(Validation.IsEmpty(strInput))
                 {
                     CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.fill_blank));
@@ -106,7 +113,20 @@ public class RegisterActivity extends Activity implements RegisterHandler.OnComp
                         }
                         else
                         {
-                            progressGenerator.start(btnSignIn, strInput, mContext);
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+                                boolean permissionGranted = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED;
+                                if(permissionGranted)
+                                {
+                                    progressGenerator.start(btnSignIn, strInput, mContext);
+                                }
+                                else
+                                {
+                                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                                }
+                            } else{
+                                progressGenerator.start(btnSignIn, strInput, mContext);
+                            }
+
                         }
                     }
                 }
@@ -158,5 +178,23 @@ public class RegisterActivity extends Activity implements RegisterHandler.OnComp
         Toast.makeText(this, R.string.Successfully_Register, Toast.LENGTH_LONG).show();
         startActivity(new Intent(mContext, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_READ_PHONE_STATE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    }
+                    else {
+                        progressGenerator.start(btnSignIn, strInput, mContext);
+                    }
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                }
+            }
+            return;
+        }
     }
 }
