@@ -8,9 +8,10 @@ import java.util.Random;
 
 public class Const {
     public static String RandURL = "&refId=" + String.valueOf(new Random().nextDouble()).replace("0.", "");
-    public static String Register = "https://webservices.localtunnel.me/Register";
-    public static String Login = "https://webservices.localtunnel.me/Login";
-    public static String GetUserTracker = "https://webservices.localtunnel.me/GetUserTracker";
-    public static String GetHistoryTracker = "https://webservices.localtunnel.me/GetHistoryTracker";
-    public static String SetUserTracker = "https://webservices.localtunnel.me/SetUserTracker";
+    private static String Base_URL = ;//"https://webservices.localtunnel.me";
+    public static String Register = Base_URL + "/Register";
+    public static String Login = Base_URL + "/Login";
+    public static String GetUserTracker = Base_URL + "/GetUserTracker";
+    public static String GetHistoryTracker = Base_URL + "/GetHistoryTracker";
+    public static String SetUserTracker = Base_URL + "/SetUserTracker";
 }
