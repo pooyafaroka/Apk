@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.webservice.Activity.MainActivity">
 
     <com.webservice.Components.ProcessButton.iml.ActionProcessButton
@@ -29,4 +31,141 @@
         custom:pb_textComplete="@string/Success"
         custom:pb_textProgress="@string/Loading" />
 
-</RelativeLayout>
+    <com.webservice.Components.ProcessButton.iml.ActionProcessButton
+        android:id="@+id/btnReceive_History_Tracker_Tracker"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/receive_history_tracker"
+        android:textColor="@color/md_white_1000"
+        android:textSize="18sp"
+        custom:pb_colorComplete="@color/md_green_900"
+        custom:pb_colorNormal="@color/md_orange_500"
+        custom:pb_colorPressed="@color/md_orange_200"
+        custom:pb_colorProgress="@color/colorPrimary"
+        custom:pb_textComplete="@string/Success"
+        custom:pb_textProgress="@string/Loading" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/round_shape_tr"
+            android:orientation="vertical">
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfSerialNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/serial_number"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfActivationCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/activation_code"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.ProcessButton.iml.ActionProcessButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/save"
+                android:textColor="@color/md_white_1000"
+                android:textSize="18sp"
+                custom:pb_colorComplete="@color/md_green_900"
+                custom:pb_colorNormal="@color/md_orange_500"
+                custom:pb_colorPressed="@color/md_orange_200"
+                custom:pb_colorProgress="@color/colorPrimary"
+                custom:pb_textComplete="@string/Success"
+                custom:pb_textProgress="@string/Loading" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

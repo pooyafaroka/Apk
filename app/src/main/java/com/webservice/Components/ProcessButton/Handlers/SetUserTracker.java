@@ -1,11 +1,10 @@
 package com.webservice.Components.ProcessButton.Handlers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.widget.Toast;
 
-import com.webservice.Activity.LoginActivity;
 import com.webservice.Components.ProcessButton.ProcessButton;
 import com.webservice.Dialogs.CustomDialog;
 import com.webservice.R;
@@ -18,30 +17,37 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by Pooya on 7/6/2017.
  */
-public class GetTrackerHandler {
+
+public class SetUserTracker {
 
     private Handler handler;
     private Context mContext;
     private int mProgress;
     private String IMEI;
     private ProcessButton button;
+    private String[] strInput;
+    private int SerialNumber_index = 0;
+    private int ActivationCode_index = 1;
+    private int Title_index = 2;
 
-    public void start(final ProcessButton button, String IMEI, Context mContext) {
+    public void start(final ProcessButton button, String[] strInput, String IMEI, Context mContext) {
         this.mContext = mContext;
         this.IMEI = IMEI;
         this.button = button;
-        GetUserTracker();
+        this.strInput = strInput;
+        SetUserTracker();
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -67,22 +73,31 @@ public class GetTrackerHandler {
         }
     }
 
-    private void GetUserTracker() {
-        new GetUserTrackerTask().execute();
+    private void SetUserTracker() {
+        new SetUserTrackerTask().execute();
     }
 
-    class GetUserTrackerTask extends AsyncTask<Void, Void, String> {
+    class SetUserTrackerTask extends AsyncTask<Void, Void, String> {
         private String res = "";
 
         @Override
         protected String doInBackground(Void... voids) {
             HttpClient hc = new DefaultHttpClient();
             String message;
+            Calendar c = Calendar.getInstance();
+            System.out.println("Current time => " + c.getTime());
 
-            HttpPost p = new HttpPost(Const.GetUserTracker);
+            SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String REGISTERDATE = df.format(c.getTime());
+
+            HttpPost p = new HttpPost(Const.SetUserTracker);
             JSONObject object = new JSONObject();
             try {
                 object.put("IMEI", IMEI);
+                object.put("SerialNumber", strInput[SerialNumber_index]);
+                object.put("ActivationCode", strInput[ActivationCode_index]);
+                object.put("Title", strInput[Title_index]);
+                object.put("REGISTERDATE", REGISTERDATE);
             } catch (Exception ex) {
 
             }
@@ -94,12 +109,9 @@ public class GetTrackerHandler {
                 HttpResponse resp = hc.execute(p);
                 if (resp != null) {
                     HttpEntity entity = resp.getEntity();
-                    String result = "";
                     if (resp.getStatusLine().getReasonPhrase().equals("OK"))
                     {
-                        InputStream instream = entity.getContent();
-                        result = convertStreamToString(instream);
-                        res = result;
+                        res = "OK";
                     }
                     else
                     {
@@ -121,25 +133,7 @@ public class GetTrackerHandler {
             {
                 stop();
                 button.setProgress(0);
-                Json json  = new Json();
-                res = res.replace("\\", "").substring(1);
-                res = res.trim();
-                String ret = "";
-                for (int i = 0; i < json.getArraySize(res); i++)
-                {
-                    ret += "IMEI: " + json.getByName(res, "IMEI", i) + "<br>"
-                        + "STATUS: " + json.getByName(res, "STATUS", i) + "<br>"
-                        + "TITLE: " + json.getByName(res, "TITLE", i) + "<br>"
-                        + "MOBILE: " + json.getByName(res, "MOBILE", i) + "<br>"
-                        + "MODEL: " + json.getByName(res, "MODEL", i) + "<br>"
-                        + "LASTUPDATE: " + json.getByName(res, "LASTUPDATE", i) + "<br>"
-                        + "LAT: " + json.getByName(res, "LAT", i) + "<br>"
-                        + "LON: " + json.getByName(res, "LON", i) + "<br><br>";
-                }
-                CustomDialog customDialog = new CustomDialog(mContext, ret);
-                customDialog.SetTitle(mContext.getResources().getString(R.string.receive_user_tracker));
-                customDialog.SetButtonText(mContext.getResources().getString(R.string.dissmiss));
-                customDialog.show();
+                Toast.makeText(mContext, R.string.Success, Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -149,28 +143,6 @@ public class GetTrackerHandler {
                 customDialog.show();
             }
         }
-    }
-
-    private static String convertStreamToString(InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
     }
 
 }

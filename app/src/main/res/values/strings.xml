@@ -17,4 +17,9 @@
     <string name="wrong_username_password">Wrong username or password</string>
     <string name="Successfully_Login">Successfully Login</string>
     <string name="receive_user_tracker">Receive User Tracker</string>
+    <string name="receive_history_tracker">Receive History of Tracker</string>
+    <string name="title">Title</string>
+    <string name="activation_code">Activation Code</string>
+    <string name="serial_number">Serial Number</string>
+    <string name="save">Save</string>
 </resources>

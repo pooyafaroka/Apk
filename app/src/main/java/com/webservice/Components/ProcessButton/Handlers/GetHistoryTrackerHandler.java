@@ -1,11 +1,9 @@
 package com.webservice.Components.ProcessButton.Handlers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 
-import com.webservice.Activity.LoginActivity;
 import com.webservice.Components.ProcessButton.ProcessButton;
 import com.webservice.Dialogs.CustomDialog;
 import com.webservice.R;
@@ -18,7 +16,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -29,7 +26,7 @@ import java.io.InputStreamReader;
 /**
  * Created by Pooya on 7/6/2017.
  */
-public class GetTrackerHandler {
+public class GetHistoryTrackerHandler {
 
     private Handler handler;
     private Context mContext;
@@ -68,10 +65,10 @@ public class GetTrackerHandler {
     }
 
     private void GetUserTracker() {
-        new GetUserTrackerTask().execute();
+        new GetHistoryTrackerTask().execute();
     }
 
-    class GetUserTrackerTask extends AsyncTask<Void, Void, String> {
+    class GetHistoryTrackerTask extends AsyncTask<Void, Void, String> {
         private String res = "";
 
         @Override
@@ -79,7 +76,7 @@ public class GetTrackerHandler {
             HttpClient hc = new DefaultHttpClient();
             String message;
 
-            HttpPost p = new HttpPost(Const.GetUserTracker);
+            HttpPost p = new HttpPost(Const.GetHistoryTracker);
             JSONObject object = new JSONObject();
             try {
                 object.put("IMEI", IMEI);
@@ -128,13 +125,7 @@ public class GetTrackerHandler {
                 for (int i = 0; i < json.getArraySize(res); i++)
                 {
                     ret += "IMEI: " + json.getByName(res, "IMEI", i) + "<br>"
-                        + "STATUS: " + json.getByName(res, "STATUS", i) + "<br>"
-                        + "TITLE: " + json.getByName(res, "TITLE", i) + "<br>"
-                        + "MOBILE: " + json.getByName(res, "MOBILE", i) + "<br>"
-                        + "MODEL: " + json.getByName(res, "MODEL", i) + "<br>"
-                        + "LASTUPDATE: " + json.getByName(res, "LASTUPDATE", i) + "<br>"
-                        + "LAT: " + json.getByName(res, "LAT", i) + "<br>"
-                        + "LON: " + json.getByName(res, "LON", i) + "<br><br>";
+                            + "REGISTERDATE: " + json.getByName(res, "REGISTERDATE", i) + "<br><br>";
                 }
                 CustomDialog customDialog = new CustomDialog(mContext, ret);
                 customDialog.SetTitle(mContext.getResources().getString(R.string.receive_user_tracker));
