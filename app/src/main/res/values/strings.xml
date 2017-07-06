@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Web Service</string>
     <string name="Log_In">Log in</string>
-    <string name="Register">Successfully Registered</string>
+    <string name="Successfully_Register">Successfully Registered</string>
+    <string name="Register">Registere</string>
     <string name="sample">Sample Text for test</string>
     <string name="dissmiss">Dissmiss</string>
     <string name="fill_blank">Please fill blank field</string>
     <string name="title_fill_blank">Fill Blank</string>
     <string name="Success">Successfull</string>
     <string name="Loading">Loading</string>
+    <string name="short_length">The length of entered PASSWORD is too long. It is must bigger than 6 character.</string>
+    <string name="same_password">The entered passwordes must be same.</string>
+    <string name="faild">Proccess failed. Try again later.</string>
+    <string name="faild_title">Faild</string>
+    <string name="register_before">You register before! Please login.</string>
 </resources>

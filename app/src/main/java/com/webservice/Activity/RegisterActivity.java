@@ -33,7 +33,6 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
 
         this.mContext = RegisterActivity.this;
 
-
         ShimmerFrameLayout shimmer_actionbar_login = (ShimmerFrameLayout) findViewById(R.id.shimmer_actionbar_login);
         shimmer_actionbar_login.useDefaults();
         shimmer_actionbar_login.setDuration(2000);
@@ -44,6 +43,9 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
         final MaterialTextField mtfName = (MaterialTextField) findViewById(R.id.mtfName);
         final MaterialTextField mtfFamily = (MaterialTextField) findViewById(R.id.mtfFamily);
         final MaterialTextField mtfMobile = (MaterialTextField) findViewById(R.id.mtfMobile);
+        final MaterialTextField mtfEmail = (MaterialTextField) findViewById(R.id.mtfEmail);
+        final MaterialTextField mtfPassword_1 = (MaterialTextField) findViewById(R.id.mtfPassword_1);
+        final MaterialTextField mtfPassword_2 = (MaterialTextField) findViewById(R.id.mtfPassword_2);
 
         mtfName.setOnClickListener(mtfOnClickListener);
         mtfFamily.setOnClickListener(mtfOnClickListener);
@@ -68,7 +70,10 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
                 String strName = mtfName.getEditText().getText().toString();
                 String strFamily = mtfFamily.getEditText().getText().toString();
                 String strMobile = mtfMobile.getEditText().getText().toString();
-                String[] strInput = new String[]{strName, strFamily, strMobile};
+                String strEmail = mtfEmail.getEditText().getText().toString();
+                String strPassword_1 = mtfPassword_1.getEditText().getText().toString();
+                String strPassword_2 = mtfPassword_2.getEditText().getText().toString();
+                String[] strInput = new String[]{strName, strFamily, strMobile, strEmail, strPassword_1, strPassword_2};
                 if(Validation.IsEmpty(strInput))
                 {
                     CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.fill_blank));
@@ -78,13 +83,28 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
                 }
                 else
                 {
-                    progressGenerator.start(btnSignIn);
-                    btnSignIn.setEnabled(false);
-                    mtfName.setEnabled(false);
-                    mtfFamily.setEnabled(false);
-                    mtfMobile.setEnabled(false);
+                    if(strPassword_1.length() < 6)
+                    {
+                        CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.fill_blank));
+                        customDialog.SetTitle(getResources().getString(R.string.short_length));
+                        customDialog.SetButtonText(getResources().getString(R.string.dissmiss));
+                        customDialog.show();
+                    }
+                    else
+                    {
+                        if(!strPassword_1.equals(strPassword_2))
+                        {
+                            CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.fill_blank));
+                            customDialog.SetTitle(getResources().getString(R.string.same_password));
+                            customDialog.SetButtonText(getResources().getString(R.string.dissmiss));
+                            customDialog.show();
+                        }
+                        else
+                        {
+                            progressGenerator.start(btnSignIn, strInput, mContext);
+                        }
+                    }
                 }
-
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -130,7 +150,7 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
 
     @Override
     public void onComplete() {
-        Toast.makeText(this, R.string.Register, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.Successfully_Register, Toast.LENGTH_LONG).show();
         startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }

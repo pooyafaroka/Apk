@@ -136,6 +136,87 @@
 
             </com.webservice.Components.Materialtextfield.MaterialTextField>
 
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfPassword_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
+            <com.webservice.Components.Materialtextfield.MaterialTextField
+                android:id="@+id/mtfPassword_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_hasFocus="false"
+                app:mtf_image="@drawable/ic_mobile"
+                app:mtf_animationDuration="200"
+                app:mtf_openKeyboardOnFocus="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:singleLine="true"
+                    android:textSize="15sp" />
+
+            </com.webservice.Components.Materialtextfield.MaterialTextField>
+
             <com.webservice.Components.ProcessButton.iml.ActionProcessButton
                 android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
@@ -144,7 +225,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="@string/Log_In"
+                android:text="@string/Register"
                 android:textColor="@color/md_white_1000"
                 android:textSize="18sp"
                 custom:pb_colorComplete="@color/md_green_900"
