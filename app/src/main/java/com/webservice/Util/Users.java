@@ -65,6 +65,28 @@ public class Users {
         return password;
     }
 
+    public void setRegisterBefore() {
+        SharedPreferences.Editor editor = this.mContext.getSharedPreferences(USER_INFO, MODE_PRIVATE).edit();
+        editor.putBoolean("setRegisterBefore", true);
+        editor.commit();
+    }
+
+    public boolean getRegisterBefore() {
+        SharedPreferences prefs = this.mContext.getSharedPreferences(USER_INFO, MODE_PRIVATE);
+        return prefs.getBoolean("setRegisterBefore", false);
+    }
+
+    public void setLogin() {
+        SharedPreferences.Editor editor = this.mContext.getSharedPreferences(USER_INFO, MODE_PRIVATE).edit();
+        editor.putBoolean("setLogin", true);
+        editor.commit();
+    }
+
+    public boolean getLogin() {
+        SharedPreferences prefs = this.mContext.getSharedPreferences(USER_INFO, MODE_PRIVATE);
+        return prefs.getBoolean("setLogin", false);
+    }
+
     public enum UserEnum {Name, Family, Mobile, Email, Password_1, Password_2};
 
     public void SaveUserLocal(String[] userInfo)

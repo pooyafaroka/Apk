@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.webservice.Components.Materialtextfield.MaterialTextField;
-import com.webservice.Components.ProcessButton.ProgressGenerator;
+import com.webservice.Components.ProcessButton.RegisterHandler;
 import com.webservice.Components.ProcessButton.iml.ActionProcessButton;
 import com.webservice.Components.Shimmer.ShimmerFrameLayout;
 import com.webservice.Dialogs.CustomDialog;
@@ -22,7 +22,7 @@ import com.webservice.Util.Validation;
 /**
  * Created by Pooya on 6/30/2017.
  */
-public class RegisterActivity extends Activity implements ProgressGenerator.OnCompleteListener{
+public class RegisterActivity extends Activity implements RegisterHandler.OnCompleteRegisterListener {
 
     private Context mContext;
 
@@ -39,7 +39,6 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
         shimmer_actionbar_login.setBaseAlpha(0.5f);
         shimmer_actionbar_login.startShimmerAnimation();
 
-
         final MaterialTextField mtfName = (MaterialTextField) findViewById(R.id.mtfName);
         final MaterialTextField mtfFamily = (MaterialTextField) findViewById(R.id.mtfFamily);
         final MaterialTextField mtfMobile = (MaterialTextField) findViewById(R.id.mtfMobile);
@@ -50,12 +49,18 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
         mtfName.setOnClickListener(mtfOnClickListener);
         mtfFamily.setOnClickListener(mtfOnClickListener);
         mtfMobile.setOnClickListener(mtfOnClickListener);
+        mtfEmail.setOnClickListener(mtfOnClickListener);
+        mtfPassword_1.setOnClickListener(mtfOnClickListener);
+        mtfPassword_2.setOnClickListener(mtfOnClickListener);
 
         mtfName.getEditText().addTextChangedListener(new myTextWatcher(mtfName));
         mtfFamily.getEditText().addTextChangedListener(new myTextWatcher(mtfFamily));
         mtfMobile.getEditText().addTextChangedListener(new myTextWatcher(mtfMobile));
+        mtfEmail.getEditText().addTextChangedListener(new myTextWatcher(mtfEmail));
+        mtfPassword_1.getEditText().addTextChangedListener(new myTextWatcher(mtfPassword_1));
+        mtfPassword_2.getEditText().addTextChangedListener(new myTextWatcher(mtfPassword_2));
 
-        final ProgressGenerator progressGenerator = new ProgressGenerator(this);
+        final RegisterHandler progressGenerator = new RegisterHandler(this);
         final ActionProcessButton btnSignIn = (ActionProcessButton) findViewById(R.id.btnSignIn);
 
         btnSignIn.setMode(ActionProcessButton.Mode.ENDLESS);
@@ -85,8 +90,8 @@ public class RegisterActivity extends Activity implements ProgressGenerator.OnCo
                 {
                     if(strPassword_1.length() < 6)
                     {
-                        CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.fill_blank));
-                        customDialog.SetTitle(getResources().getString(R.string.short_length));
+                        CustomDialog customDialog = new CustomDialog(mContext, getResources().getString(R.string.short_length));
+                        customDialog.SetTitle(getResources().getString(R.string.fill_blank));
                         customDialog.SetButtonText(getResources().getString(R.string.dissmiss));
                         customDialog.show();
                     }

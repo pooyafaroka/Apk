@@ -20,24 +20,24 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.util.Random;
-
-public class ProgressGenerator {
+/**
+ * Created by Pooya on 7/6/2017.
+ */
+public class LoginHandler {
 
     private Context mContext;
     private Users users;
     private Handler handler;
     private ProcessButton button;
 
-    public interface OnCompleteListener {
-
+    public interface OnCompleteLoginListener {
         public void onComplete();
     }
 
-    private OnCompleteListener mListener;
+    private OnCompleteLoginListener mListener;
     private int mProgress;
 
-    public ProgressGenerator(OnCompleteListener listener) {
+    public LoginHandler(OnCompleteLoginListener listener) {
         mListener = listener;
     }
 
@@ -46,7 +46,7 @@ public class ProgressGenerator {
         users = new Users(mContext);
         this.button = button;
         button.setEnabled(true);
-        Register(strInput);
+        Login(strInput);
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -72,19 +72,15 @@ public class ProgressGenerator {
         return 750;
     }
 
-    public void Register(String[] strInput) {
+    public void Login(String[] strInput) {
 
-        new RegisterTask().execute(strInput);
+        new LoginTask().execute(strInput);
     }
 
-    class RegisterTask extends AsyncTask<String, Void, String> {
-        String Name = "";
-        String Family = "";
+    class LoginTask extends AsyncTask<String, Void, String> {
         String Mobile = "";
-        String Email = "";
         String Password = "";
         private String res = "";
-        private int HTTP_STATUS_CODE = 204;
 
         @Override
         protected void onPreExecute() {
@@ -93,22 +89,16 @@ public class ProgressGenerator {
 
         @Override
         protected String doInBackground(String... strInput) {
-            Name = strInput[Users.UserEnum.Name.ordinal()];
-            Family = strInput[Users.UserEnum.Family.ordinal()];
-            Mobile = strInput[Users.UserEnum.Mobile.ordinal()];
-            Email = strInput[Users.UserEnum.Email.ordinal()];
-            Password = strInput[Users.UserEnum.Password_1.ordinal()];
+            Mobile = strInput[0];
+            Password = strInput[1];
 
             HttpClient hc = new DefaultHttpClient();
             String message;
 
-            HttpPost p = new HttpPost(Const.Register);
+            HttpPost p = new HttpPost(Const.Login);
             JSONObject object = new JSONObject();
             try {
-                object.put("Name", Name);
-                object.put("Family", Family);
                 object.put("Mobile", Mobile);
-                object.put("Email", Email);
                 object.put("Password", Password);
             } catch (Exception ex) {
 
@@ -144,17 +134,14 @@ public class ProgressGenerator {
         protected void onPostExecute(String res) {
             if(res.equals("OK"))
             {
-                stop();
                 mListener.onComplete();
             }
-            else if(res.equals("EXIST"))
+            else if(res.equals("NOT"))
             {
-                CustomDialog customDialog = new CustomDialog(mContext, mContext.getResources().getString(R.string.register_before));
+                CustomDialog customDialog = new CustomDialog(mContext, mContext.getResources().getString(R.string.wrong_username_password));
                 customDialog.SetTitle(mContext.getResources().getString(R.string.faild_title));
                 customDialog.SetButtonText(mContext.getResources().getString(R.string.dissmiss));
                 customDialog.show();
-                stop();
-                mContext.startActivity(new Intent(mContext, LoginActivity.class));
             }
             else if(res.equals("NaN"))
             {
@@ -162,9 +149,9 @@ public class ProgressGenerator {
                 customDialog.SetTitle(mContext.getResources().getString(R.string.faild_title));
                 customDialog.SetButtonText(mContext.getResources().getString(R.string.dissmiss));
                 customDialog.show();
-                stop();
             }
-            button.setText(R.string.Register);
+            stop();
+            button.setText(R.string.Log_In);
             button.setProgress(0);
         }
     }

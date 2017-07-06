@@ -33,8 +33,16 @@ public class SplashActivity extends Activity {
                 {
                     if(userInfo[Users.UserEnum.Name.ordinal()].equals("NaN"))
                     {
-                        startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
-                        finish();
+                        if(users.getRegisterBefore())
+                        {
+                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                            finish();
+                        }
+                        else
+                        {
+                            startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+                            finish();
+                        }
                     }
                     else
                     {
@@ -44,8 +52,16 @@ public class SplashActivity extends Activity {
                 }
                 else
                 {
-                    startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
-                    finish();
+                    if(users.getRegisterBefore())
+                    {
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                    else
+                    {
+                        startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+                        finish();
+                    }
                 }
 
             }
